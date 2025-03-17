@@ -872,7 +872,7 @@ void ListBaton::Execute() {
       locationId = wcsdup(szBuffer);
     }
     if (SetupDiGetDeviceRegistryPropertyW(hDevInfo, &deviceInfoData,
-                                         DEVPKEY_Device_BusReportedDeviceDesc, &dwPropertyRegDataType,
+                                         &DEVPKEY_Device_BusReportedDeviceDesc, &dwPropertyRegDataType,
                                          reinterpret_cast<PBYTE>(szBuffer), sizeof(szBuffer), &dwSize)) {
       friendlyName = wcsdup(szBuffer);
     }
