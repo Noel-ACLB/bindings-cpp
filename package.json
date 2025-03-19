@@ -91,7 +91,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/serialport/bindings-cpp.git"
+    "url": "https://github.com/Noel-ACLB/bindings-cpp.git"
   },
   "funding": "https://opencollective.com/serialport/donate",
   "changelog": {
