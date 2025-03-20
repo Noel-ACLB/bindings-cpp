@@ -1,0 +1,10 @@
+--- a/node_modules/@serialport/bindings-interface/dist/index.d.ts
++++ b/node_modules/@serialport/bindings-interface/dist/index.d.ts
+@@ -123,6 +123,7 @@
+     locationId: string | undefined;
+     productId: string | undefined;
+     vendorId: string | undefined;
++    friendlyName: string | undefined;
+ }
+ 
+ export declare type PortInfoFromBinding<Binding> = Binding extends BindingInterface<any, any, infer T> ? T : never;
