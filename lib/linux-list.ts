@@ -51,9 +51,11 @@ function propVal(name: string, val: string) {
 
 function getActiveDevices(): Set<string> {
   try {
+    /* eslint-disable comma-dangle */
     const validPaths = fs.readdirSync('/dev/serial/by-path').map(file =>
       fs.realpathSync(`/dev/serial/by-path/${file}`)
     )
+    /* eslint-enable comma-dangle */
     return new Set(validPaths)
   } catch {
     return new Set()

@@ -1,5 +1,7 @@
 import { assert, shouldReject } from '../test/assert'
 import { mockLinuxList as linuxList, mockLinuxListError } from './mocks/linux-list'
+import fs from 'fs'
+import sinon from 'sinon'
 
 const mockUdevOutput = String.raw`
 P: /devices/platform/serial8250/tty/ttyS0
@@ -27,8 +29,8 @@ E: DEVNAME=/dev/ttyACM0
 E: DEVPATH=/devices/pci0000:00/0000:00:06.0/usb1/1-2/1-2:1.0/tty/ttyACM0
 E: ID_BUS=usb
 E: ID_MM_CANDIDATE=1
-E: ID_MODEL=0043
-E: ID_MODEL_ENC=0043
+E: ID_MODEL=Arduino_Uno
+E: ID_MODEL_ENC=Arduino\x20Uno
 E: ID_MODEL_FROM_DATABASE=Uno R3 (CDC ACM)
 E: ID_MODEL_ID=0043
 E: ID_PATH=pci-0000:00:06.0-usb-0:2:1.0
@@ -76,13 +78,8 @@ N: ttyNOTASERIALPORT
 
 const portOutput = [
   {
-    path: '/dev/ttyS0',
-  },
-  {
-    path: '/dev/ttyS1',
-  },
-  {
     path: '/dev/ttyACM0',
+    friendlyName: 'Arduino Uno',
     manufacturer: 'Arduino (www.arduino.cc)',
     serialNumber: '752303138333518011C1',
     productId: '0043',
@@ -93,17 +90,25 @@ const portOutput = [
     path: '/dev/ttyAMA_im_a_programmer',
     pnpId: 'pci-NATA_Siolynx2_C8T6VI1F-if00-port0',
   },
-  {
-    path: '/dev/ttyMFD0',
-    vendorId: '2343',
-    productId: '0043',
-  },
-  {
-    path: '/dev/rfcomm4',
-  },
 ]
 
 describe('listLinux', () => {
+  let readdirSyncStub: sinon.SinonStub
+  let realpathSyncStub: sinon.SinonStub
+
+  beforeEach(() => {
+    readdirSyncStub = sinon.stub(fs, 'readdirSync')
+    realpathSyncStub = sinon.stub(fs, 'realpathSync')
+
+    readdirSyncStub.withArgs('/dev/serial/by-path').returns(['pci-0000:00:06.0-usb-0:2:1.0', 'pci-NATA_Siolynx2_C8T6VI1F-if00-port0'])
+    realpathSyncStub.withArgs('/dev/serial/by-path/pci-0000:00:06.0-usb-0:2:1.0').returns('/dev/ttyACM0')
+    realpathSyncStub.withArgs('/dev/serial/by-path/pci-NATA_Siolynx2_C8T6VI1F-if00-port0').returns('/dev/ttyAMA_im_a_programmer')
+  })
+
+  afterEach(() => {
+    sinon.restore()
+  })
+
   it('lists available serialports', async () => {
     const ports = await linuxList(mockUdevOutput)
     assert.containSubset(ports, portOutput)
