@@ -95,7 +95,7 @@ jobs:
           architecture: ${{ matrix.node }}
       - uses: actions/checkout@v4
       - run: npm ci
-      - run: npm patch-package
+      - run: npx patch-package
       - run: npm run ${{ matrix.command }} -- ${{ matrix.args }}
       - uses: actions/upload-artifact@v4
         with:
