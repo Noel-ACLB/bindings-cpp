@@ -1,5 +1,5 @@
 {
-  "name": "@serialport/bindings-cpp",
+  "name": "@serialport/bindings-cpp", 
   "description": "SerialPort Hardware bindings for node serialport written in c++",
   "version": "0.0.0-development",
   "main": "./dist/index.js",
