@@ -1,4 +1,4 @@
-import {BindingsErrorInterface} from '@serialport/bindings-interface'
+import {BindingsErrorInterface} from '@noelneu/bindings-interface'
 
 export class BindingsError extends Error implements BindingsErrorInterface {
   canceled: boolean

@@ -1,5 +1,5 @@
 import { spawn } from 'child_process'
-import { PortInfo } from '@serialport/bindings-interface'
+import { PortInfo } from '@noelneu/bindings-interface'
 import { ReadlineParser } from '@serialport/parser-readline'
 import fs from 'fs'
 

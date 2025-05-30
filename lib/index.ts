@@ -5,7 +5,7 @@ import { LinuxBinding, LinuxBindingInterface } from './linux'
 import { WindowsBinding, WindowsBindingInterface } from './win32'
 const debug = debugFactory('serialport/bindings-cpp')
 
-export * from '@serialport/bindings-interface'
+export * from '@noelneu/bindings-interface'
 export * from './darwin'
 export * from './linux'
 export * from './win32'
